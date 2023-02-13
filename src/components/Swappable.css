@@ -1,0 +1,85 @@
+
+.btn{
+    font-weight: bold;
+    font-size: 15px;
+
+
+
+}
+input[type="checkbox"] {
+    height: 28px;
+    width: 28px;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    appearance: none;
+    border: 2px solid #F4D1BF;
+    border-radius: 3px;
+    background: #fff;
+    position: relative;
+    margin-right: 10px;
+   
+  
+  }
+  
+  input[type="checkbox"]:checked {
+    border: 2px solid #F4D1BF;
+   background-image: url(images/white-tick-png-8.png);
+    background-size: contain;
+    background-color: red;
+  
+  }
+  
+  input[type="checkbox"]:checked:before, input[type="checkbox"]:checked:after {
+    content: "";
+    position: absolute; 
+    background-image: url(images/white-tick-png-8.png);
+    background-size: contain;
+  
+  }
+    
+  input[type="checkbox"]:checked:before {
+    width: 10px;
+    top: 40%;
+    left: 50%;
+    transform: rotate(44deg) ;
+  }
+  
+  input[type="checkbox"]:checked:after {
+    width: 14px;
+    top: 40%;
+    left: 50%;
+    transform: rotate(-55deg);
+  }
+  
+  input[type="checkbox"]:focus {
+    outline: none;
+  }
+  .step1{
+          width: 100%;
+          min-height: 50px;
+          border: 2px solid #F4D1BF;
+          border-radius: 9px;
+       
+        }
+        .submit-btn{
+          background-color: #ff5500 ;
+          color: white;
+          padding: 12px 30px;
+          font-size: 18px;
+        }
+        .recipename{
+         padding-right: 200px;
+        }
+        .prepartion_duration{
+          padding-right: 50px;
+  
+        }
+  
+        .recipedetails {
+    margin:15px 0;
+  }
+  .box{
+    width: auto;
+    height: 400px;
+  }

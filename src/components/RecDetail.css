@@ -1,0 +1,12 @@
+.form-control{
+    outline: none;
+    padding-right: 40%;
+  
+  }
+  
+  
+  .form-control:focus {  
+    box-shadow:  0 1px 1px rgba(244, 209, 191), 0 0 1px rgba(244, 209, 191);
+            border: 2px solid #F4D1BF;
+
+  }

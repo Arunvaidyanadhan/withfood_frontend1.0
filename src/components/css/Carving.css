@@ -1,0 +1,53 @@
+.MultiCarousel { float: left; overflow: hidden; padding: 15px; width: 100%; position:relative; }
+    .MultiCarousel .MultiCarousel-inner { transition: 1s ease all; float: left; }
+        .MultiCarousel .MultiCarousel-inner .item { float: left;}
+        .MultiCarousel .MultiCarousel-inner .item > div { text-align: center; padding:2px; margin:2px; background:#ffc2b3 ;color:#666;}
+    .MultiCarousel .leftLst, .MultiCarousel .rightLst { position:absolute; border-radius:50%;top:calc(50% - 20px); }
+    .MultiCarousel .leftLst { left:0; }
+    .MultiCarousel .rightLst { right:0; }
+    
+        .MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over { pointer-events: none; color: #333; }
+
+
+.fa-arrow-alt-circle-right{
+  background-color:#ffdb00;
+  color: white;
+}
+.fa-arrow-alt-circle-left{
+  background-color:#ffdb00;
+  color: white;
+}
+.item {
+    position: relative;
+    width: 200px;
+    height:200px;
+
+}
+.overlay {
+    position: absolute;
+            top: 50%;
+            left: 50%;
+            color: white;
+            display: block;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 93%;
+            width: 100%;
+            opacity: 0;
+            transition: .5s ease;
+            background-color: #333;
+}
+
+
+.item:hover .overlay {
+    opacity: 0.6;
+}
+/*---- Blog image card start---- */
+.card{
+border: 2px solid #ff5500;
+background-color: #ffc2b3;
+}
+
+

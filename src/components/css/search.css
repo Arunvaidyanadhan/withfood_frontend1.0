@@ -1,0 +1,39 @@
+.nav-link{
+    color: black;
+   
+  
+
+  }
+ .nav-link:hover{
+    color: #ff5500;
+
+  }
+.nav-link.blog{
+     border-right: 2px solid #ffdb00;
+  } 
+
+  @media only screen and (max-width: 500px) {
+.nav-link.blog {
+border-right: none;
+border-bottom: 2px solid #ffdb00 ;
+}
+}
+
+
+ 
+  .inputsearch{
+padding-right: 10%;
+}
+ .searchbtn {
+background-color:#ffdb00;
+}
+.searchbtn:hover {  
+  background-color:#ffdb00;
+color: #ff5500;
+
+}
+
+.form-control:focus {
+      box-shadow:  0 1px 1px rgba(244, 209, 191), 0 0 1px rgba(244, 209, 191);
+      border: 2px solid #F4D1BF;
+}

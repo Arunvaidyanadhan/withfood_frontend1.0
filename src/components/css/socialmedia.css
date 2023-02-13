@@ -1,0 +1,33 @@
+
+
+.social-container {
+    background: white;
+    margin-top:-20px;
+    display: flex;
+  flex-direction: row-reverse;
+  padding: 5px 5px;
+  border-bottom: 1px solid  #333;
+ 
+  }
+  a.social {
+    margin: 0 1rem;
+    font-size:20px;
+  }
+  a.social:hover {
+    transform: translateY(-2px);
+  }
+  a.youtube {
+    color:  #ff5500;
+  }
+  
+  a.facebook {
+    color:  #ff5500;
+  }
+  
+  a.twitter {
+    color: #ff5500;
+  }
+  
+  a.instagram {
+    color: #ff5500;
+  }
