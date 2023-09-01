@@ -21,7 +21,7 @@ export default function CarvingCarousle() {
       <div className="MultiCarousel-inner">
           <div className="item">
                     <div className="pad15">
-                        <a href="#"><img src="images/4.jpg" className="img-fluid"/>
+                        <a href="#"><img src="th (4).jpg" className="img-fluid"/>
                         <div className="overlay">
                     <div className="text text-white"><a className="unstyle" href="#"><p className="mt-5 text-white"><strong>Canadian Cousins</strong></p></a></div>
                 </div>

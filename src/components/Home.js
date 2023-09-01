@@ -13,6 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import './css/all.css';
 import "react-bootstrap/carousel"; // requires a loader  
 import Carousel from 'react-bootstrap/Carousel';
+import './css/Carving.css';
+import './carousel.js'; 
 
 
 const Home = () => {
@@ -26,7 +28,7 @@ const Home = () => {
 
 
 
-
+var Rec_id = 13;
 
   var recipesResult;
 
@@ -35,7 +37,7 @@ const Home = () => {
   });
 
   const getRecipes = () => {
-    fetch("http://localhost:8000/recipes"
+    fetch("http://localhost:3000/recipes"
     )
       .then((res) => res.json())
       .then(
@@ -51,10 +53,8 @@ const Home = () => {
   };
 
 
-  if(recipesResult !== undefined) {
-    console.log('result', recipesResult)
 
-  }
+
 
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./RecDetail.css"
@@ -24,30 +24,68 @@ const ContributorPage = () => {
   const [Swappable_Quantity, setSwappable_Quantity] = useState("")
   const [Swappable_Measurments, setSwappable_Measurments] = useState("")
 
+  //alert
 
-  const [ImagePath, setImagePath] = useState("")
+const [ImagePath, setImagePath] = useState("")
 
-  const [currentIng, setCurrentIng] = useState("")
+
+
+
 
 
 
   const [viewtoShow, setViewToShow] = useState([]);
   const [viewtoTips, setViewToTips] = useState([]);
 
-  const [viewtoIng, setViewToIng] = useState([]);
+  const [viewtoIng, setViewToIng] = useState(['Please Select']);
   const [viewtoSwapIng, setViewToSwapIng] = useState([]);
+  const [swappableBody, setswappableBody] = useState([]);
+
 
   const [recipe_Id, setrecipe_Id] = useState({});
 
   const [ingredientDetails, setingredientDetails] = useState({});
+console.log(ingredientDetails)
 
   const [selectedOptions, setSelectedOptions] = useState([]);
 
+
+
+  
+
   const handleMultiSelectChange = (selectedOptions) => {
-    console.log('selectted', selectedOptions,currentIng)
+    for (var p = 0; p < selectedOptions.length; p++) {
+      const childing = selectedOptions[p].value;
+      const parenting = SwappableIncredient;
+      const qua = Swappable_Quantity;
+      const meas = Swappable_Measurments;
+
+      var addSwappableBody = {
+        ParentIncredientsName: '',
+        SwappableIngredientName: '',
+        Measurments: '',
+        Quantity: '',
+        RecipeId: ''
+      }
+
+      Object.assign(addSwappableBody, {
+        ParentIncredientsName: parenting,
+        SwappableIngredientName: childing,
+        Measurments: meas,
+        Quantity: qua,
+        RecipeId: ''
+      });
+    }
+    const newIng = (dataIng) => [...dataIng, addSwappableBody];
+    setswappableBody(newIng);
+
 
     setSelectedOptions(selectedOptions);
+
   };
+
+
+
 
   const handleOptionalChange = () => {
     setIsOptional(!IsOptional);
@@ -58,10 +96,9 @@ const ContributorPage = () => {
   const RecipeTypeValues = ['Please select', 'Veg', 'Non-veg', 'Vegan']
   const RecipeCourseValues = ['Please select', 'Starter', 'Main Course', 'dessert', 'others']
   const RecipeMeasurments = ['Please select', 'kg', 'grams', 'cup', 'spoon', 'nos']
-  const RecipeSwappable = ['Please select']
 
   const swappableOptions = [
-    { value: '', label: '',parent: '' },
+    { value: '', label: '', parent: '' },
 
   ];
 
@@ -72,6 +109,7 @@ const ContributorPage = () => {
 
   // submit to the server
   const handleSubmit = (e) => {
+
 
     let newArr = viewtoShow.map(function (val) {
       return Object.values(val)
@@ -100,6 +138,7 @@ const ContributorPage = () => {
       Steps_Tips: final,
       Tips: finaltips,
       ImagePath: ImagePath
+
     };
     const optionsss = {
       method: 'post',
@@ -119,40 +158,43 @@ const ContributorPage = () => {
         }
       })
       .then(data => setrecipe_Id(data.data.insertId))
-      .catch(error => console.log(error, 'finalerror'));
+      .catch(error => console.log('error'));
   };
+
 
 
   const handleIngre = (e) => {
 
-    var ingId = e;
+    var recId = e;
+    var normalResult = [];
+    var SwappableResult = [];
+    normalResult = viewtoIng.map(function (data) {
+      return {
+        IncredientsName: data.ingredient, Measurments: data.measurments,
+        IsOptional: data.isoptional, IsSwappable: true, RecipeId: recId, Quantity: data.quantity
+      }
+    })
+
+    normalResult.shift()
+
+    SwappableResult = swappableBody.map(function (data) {
+      return {
+        ParentIncredientsName: data.ParentIncredientsName, SwappableIngredientName: data.SwappableIngredientName,
+        Quantity: data.Quantity, Measurments: data.Measurments, RecipeId: recId
+      }
+    })
 
 
-    var body = [{
-      IncredientsName: 'chicken', Measurments: 'cups', IsOptional: 'no', IsSwappable: 'yes'
-      , RecipeId: ingId, Quantity: '2'
-    },
-    {
-      IncredientsName: 'mutton', Measurments: 'cups', IsOptional: 'no', IsSwappable: 'yes'
-      , RecipeId: ingId, Quantity: '2'
-    },
-    {
-      IncredientsName: 'salt', Measurments: 'cups', IsOptional: 'no', IsSwappable: 'no'
-      , RecipeId: recipe_Id, Quantity: '2'
-    },
-    {
-      IncredientsName: 'curdk', Measurments: 'cups', IsOptional: 'no', IsSwappable: 'yes'
-      , RecipeId: ingId, Quantity: '2'
-    },]
     var options = {
       method: 'post',
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(normalResult)
     }
-    {
+
+    
       fetch('http://localhost:3000/incredients', options)
         .then(response => {
           if (response.ok) {
@@ -162,8 +204,29 @@ const ContributorPage = () => {
           }
         })
         .then(data => setingredientDetails(data))
-        .catch(error => console.log(error, 'finalerror'));
+        .catch(error => console.log('error'));
+    
+
+    var Swappableoptions = {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(SwappableResult)
     }
+    
+      fetch('http://localhost:3000/Subincredients', Swappableoptions)
+        .then(response => {
+          if (response.ok) {
+            return response;
+          } else {
+            throw new Error('Something went wrong in sub ingredients...');
+          }
+        })
+        .then(data => console.log(data))
+        .catch(error => console.log('error'));
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 
@@ -175,9 +238,8 @@ const ContributorPage = () => {
     )
       handleIngre(recipe_Id);
 
-  }, [recipe_Id]);
+  });
 
-  console.log('ingredients', ingredientDetails)
 
   const handleRemoveOption = (index) => {
     const rows = [...viewtoShow];
@@ -250,9 +312,9 @@ const ContributorPage = () => {
     setQuantity('')
     setMeasurments('')
     setIsOptional('')
-
     const newIng = (dataIng) => [...dataIng, addI];
     setViewToIng(newIng);
+
   };
 
   const handleSwappableIngredient = async (e) => {
@@ -268,11 +330,6 @@ const ContributorPage = () => {
       measurments: Swappable_Measurments,
       IsSwappable: true
     });
-    setSwappableIncredient('')
-    setSwappable_Quantity('')
-    setSwappable_Measurments('')
-    setIsOptional('')
-
     const newIng = (dataIng) => [...dataIng, addSI];
     setViewToSwapIng(newIng);
   };
@@ -330,12 +387,12 @@ const ContributorPage = () => {
     <div className='col container'>
       <label className="form-label" for="customFile"></label>
       <div></div>
-      <input placeholder='please Image Upload' type="file" className="form-control form-control-sm" onChange={handleImage} />
+      <input placeholder='please Image Upload' type="file" alt='test' className="form-control form-control-sm" onChange={handleImage} />
     </div>
     {ImagePath ? (<div className="container recipeimage mt-2 ">
 
       <div style={{ width: "100%", height: "400px", borderRadius: "15px" }}>
-        <img src={ImagePath} style={{ width: '100%', height: '400px' }} />
+        <img src={ImagePath} alt="demo" style={{ width: '100%', height: '400px' }} />
 
       </div>
     </div>) : ('')}
@@ -364,26 +421,30 @@ const ContributorPage = () => {
             <button className="btn btn-secondary btn-sm ml-2" onClick={handleOtherIngredient}><span className="fas fa-plus-square" ></span></button>
 
             <h6>optional</h6>
-            {viewtoIng.map((data, index) => (<div className="d-flex justify-content-between  mb-1">
-              {console.log('viewing', viewtoIng)}
-              <div className="p-1 ">
-                <form className="form-inline" >
-                  <input className="checkbox" type="checkbox" value={data.isoptional
-                  } checked={data.isoptional
-                  } />
-                  <p className="lead ">{data.ingredient}</p>
-                </form>
-              </div>
+            {viewtoIng.map((data, index) => (
 
-              <div className="p-1 ">
+              <div className="d-flex justify-content-between  mb-1">
+                <div className="p-1 ">
+                  <form className="form-inline" >
+                    {data.ingredient !== undefined ? <input className="checkbox" type="checkbox" value={data.isoptional
+                    } checked={data.isoptional
+                    } /> : ''}
+
+                    <p className="lead ">{data.ingredient !== undefined ? data.ingredient : ''}</p>
+                  </form>
+                </div>
+
+                <div className="p-1 ">
 
 
-              </div>
-              <div className="p-1 ">
-                <span className=" lead fs-5"><b>{data.quantity}{data.measurments}</b></span>
-                <button className="btn btn-secondary btn-sm ml-2" onClick={() => { handleRemoveOpt_ing(index) }}><span className="fas fa-window-close"></span></button>
-              </div>
-            </div>))}
+                </div>
+                <div className="p-1 ">
+                  <span className=" lead fs-5"><b>{data.quantity !== undefined ? data.quantity : ''}{data.measurments !== undefined ? data.measurments
+                    : ''}</b></span>
+                  {data.ingredient !== undefined ? <button className="btn btn-secondary btn-sm ml-2" onClick={() => { handleRemoveOpt_ing(index) }}><span className="fas fa-window-close"></span></button> : ''}
+
+                </div>
+              </div>))}
 
 
 
@@ -395,7 +456,13 @@ const ContributorPage = () => {
             <legend className="float-none w-auto  p-2">Swappable Ingredients</legend>
             <div className="form-inline">
               <label for="email" className="mr-sm-2"></label>
-              <input type="email" className=" col-3" placeholder="Ingredients" value={SwappableIncredient} onChange={(e) => setSwappableIncredient(e.target.value)} />              <label for="quantity" className="mr-sm-2"></label>
+              <select className=" col-3" placeholder="Ingredients" value={SwappableIncredient} onChange={(e) => setSwappableIncredient(e.target.value)}>
+                {viewtoIng.map((data) => (
+                  <option value={data.ingredient}>{data.ingredient}</option>
+
+                ))}
+              </select>
+              <label for="quantity" className="mr-sm-2"></label>
               <label for="pwd" className="mr-sm-2"></label>
               <input type="text" className="col-2" placeholder="quantity" value={Swappable_Quantity} onChange={(e) => setSwappable_Quantity(e.target.value)} />
               <label for="measurement" className="mr-sm-2"></label>
@@ -408,31 +475,33 @@ const ContributorPage = () => {
               <button className="btn btn-secondary btn-sm ml-2" onClick={handleSwappableIngredient}><span className="fas fa-plus-square" ></span></button>
             </div>
 
-            {viewtoSwapIng.map((data, index) => (<div className="d-flex justify-content-between  mb-1">
-              <div className="p-1 ">
-                <form className="form-inline" >
-                  <p className="lead ">{data.ingredient}</p>
+            {viewtoSwapIng.map((data, index) => (
+              <div className="d-flex justify-content-between  mb-1">
+                <div className="p-1 ">
+                  <form className="form-inline" >
 
-                </form>
-              </div>
+                    <p className="lead ">{data.ingredient}</p>
 
-              <div >
-                <Select
-                  className="mx-5  mt-2  "
-                  options={swappableOptions}
-                  isMulti
-                  isCreatable={true}
-                  onChange={handleMultiSelectChange}
+                  </form>
+                </div>
 
+                <div >
+                  <Select
+                    className="mx-5  mt-2  "
+                    options={swappableOptions}
+                    isMulti
+                    isCreatable={true}
+                    onChange={handleMultiSelectChange}
+                    value={selectedOptions[data.ingredient]}
                   //value={selectedOptions[data.ingredient]}
-                />
+                  />
 
-              </div>
-              <div className="p-1 ">
-                <span className=" lead fs-5"><b>{data.quantity}{data.measurments}</b></span>
-                <button className="btn btn-secondary btn-sm ml-2" onClick={() => { handleRemoveOpt_ing(index) }}><span className="fas fa-window-close"></span></button>
-              </div>
-            </div>))}
+                </div>
+                <div className="p-1 ">
+                  <span className=" lead fs-5"><b>{data.quantity}{data.measurments}</b></span>
+                  <button className="btn btn-secondary btn-sm ml-2" onClick={() => { handleRemoveOpt_ing(index) }}><span className="fas fa-window-close"></span></button>
+                </div>
+              </div>))}
 
 
 
