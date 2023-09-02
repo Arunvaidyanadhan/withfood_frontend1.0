@@ -26,7 +26,7 @@ const ContributorPage = () => {
 
   //alert
 
-const [ImagePath, setImagePath] = useState("")
+  const [ImagePath, setImagePath] = useState("")
 
 
 
@@ -45,13 +45,13 @@ const [ImagePath, setImagePath] = useState("")
   const [recipe_Id, setrecipe_Id] = useState({});
 
   const [ingredientDetails, setingredientDetails] = useState({});
-console.log(ingredientDetails)
+  console.log(ingredientDetails)
 
   const [selectedOptions, setSelectedOptions] = useState([]);
 
 
 
-  
+
 
   const handleMultiSelectChange = (selectedOptions) => {
     for (var p = 0; p < selectedOptions.length; p++) {
@@ -102,8 +102,16 @@ console.log(ingredientDetails)
 
   ];
 
-  function handleImage(e) {
-    setImagePath(URL.createObjectURL(e.target.files[0]));
+  function handleImage(event) {
+    setImagePath(URL.createObjectURL(event.target.files[0]));
+    const file = event.target.files[0];
+    const formData = new FormData()
+    formData.append('image', file)
+
+    console.log('formdata',formData.file)
+
+
+
   }
 
 
@@ -194,18 +202,18 @@ console.log(ingredientDetails)
       body: JSON.stringify(normalResult)
     }
 
-    
-      fetch('http://localhost:3000/incredients', options)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error('Something went wrong in ingredients...');
-          }
-        })
-        .then(data => setingredientDetails(data))
-        .catch(error => console.log('error'));
-    
+
+    fetch('http://localhost:3000/incredients', options)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong in ingredients...');
+        }
+      })
+      .then(data => setingredientDetails(data))
+      .catch(error => console.log('error'));
+
 
     var Swappableoptions = {
       method: 'post',
@@ -215,18 +223,18 @@ console.log(ingredientDetails)
       },
       body: JSON.stringify(SwappableResult)
     }
-    
-      fetch('http://localhost:3000/Subincredients', Swappableoptions)
-        .then(response => {
-          if (response.ok) {
-            return response;
-          } else {
-            throw new Error('Something went wrong in sub ingredients...');
-          }
-        })
-        .then(data => console.log(data))
-        .catch(error => console.log('error'));
-    
+
+    fetch('http://localhost:3000/Subincredients', Swappableoptions)
+      .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          throw new Error('Something went wrong in sub ingredients...');
+        }
+      })
+      .then(data => console.log(data))
+      .catch(error => console.log('error'));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 
@@ -387,7 +395,7 @@ console.log(ingredientDetails)
     <div className='col container'>
       <label className="form-label" for="customFile"></label>
       <div></div>
-      <input placeholder='please Image Upload' type="file" alt='test' className="form-control form-control-sm" onChange={handleImage} />
+      <input placeholder='please Image Upload' type="file" name="image" accept='image/*' className="form-control form-control-sm" onChange={handleImage} />
     </div>
     {ImagePath ? (<div className="container recipeimage mt-2 ">
 

@@ -28,7 +28,6 @@ const Home = () => {
 
 
 
-var Rec_id = 13;
 
   var recipesResult;
 
