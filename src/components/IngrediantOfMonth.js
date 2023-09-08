@@ -22,9 +22,11 @@ const responsive = {
     }
 };
 
-const IngrediantOfMonth = ({ viewtoShow }) => {
+const IngrediantOfMonth = ({ viewtoShow, testId }) => {
     const navigate = useNavigate();
+    console.log('view', viewtoShow)
 
+    
     const recipePage = (e) => {
         localStorage.setItem('recipeId', e); // stores recipeid
 

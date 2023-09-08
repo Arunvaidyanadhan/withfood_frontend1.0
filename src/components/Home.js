@@ -18,7 +18,7 @@ import './carousel.js';
 
 const CarvingCarousle = () => {
   const [viewtoShow, setViewToShow] = useState([]);
-  const [RecipeName, setname] = useState("");
+  const [RecipeName, setname] = useState(undefined);
 
 
 
@@ -42,12 +42,23 @@ const CarvingCarousle = () => {
       getRecipes()
 
   });
+
+  useEffect(() => {
+   
+    if (
+      RecipeName?.length === 0
+    )
+    getRecipes()  
+    });
+
   const getRecipes = () => {
     fetch("http://localhost:3000/recipes"
     )
       .then((res) => res.json())
       .then(
         (result) => {
+          // Declare a new array
+
           setViewToShow(result.data)
 
         },
@@ -56,18 +67,25 @@ const CarvingCarousle = () => {
         }
       );
   };
-  var result;
+
   const getRecipeswithfilter = () => {
+    fetch(`http://localhost:3000/ingredientBySearch?ingredient_name=${RecipeName}`
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setViewToShow(result.data)
+          console.log('succ', result.data)
 
-    result = viewtoShow?.filter(function (el) {
-      return el.RecipeName.includes(RecipeName)
-    }
+        },
+        (error) => {
+          console.log(error, 'error');
+        }
+      );
+  };
 
-    );
-  }
 
-
-  console.log('result', result)
+  var testId = 100;
 
 
   return <>
@@ -81,7 +99,7 @@ const CarvingCarousle = () => {
           <img src="images/logo.gif" alt="Logo" style={{ width: "150px" }} />
         </a>
         <div className="input-group mb-3 inputsearch">
-          <input type="text" className="form-control my-4 p-4" placeholder="Search Recipe" onChange={(e) => setname(e.target.value)} />
+          <input type="text" className="form-control my-4 p-4" placeholder="What ingredient you have?" onChange={(e) => setname(e.target.value)} />
           <div className="input-group-append">
             <button className="btn btn-rounded text-white btn-lg my-4 pr-2 searchbtn" type="button" onClick={getRecipeswithfilter}><b>Search</b></button>
           </div>
@@ -132,12 +150,12 @@ const CarvingCarousle = () => {
         </Carousel.Item>
       </Carousel><>
         <div className="container ">
-          <h1 className="m-0">What are you carving for ?</h1>
+          <h1 className="m-0">What are you craving for ?</h1>
         </div>
 
 
 
-      </><IngrediantOfMonth viewtoShow={viewtoShow} />
+      </><IngrediantOfMonth viewtoShow={viewtoShow} testId={testId} />
       <Blog /><div className="container">
         <div className="row d-flex justify-content-around ">
           <div className="col-sm-12 col-md-6 col-lg-6 my-2   ">
