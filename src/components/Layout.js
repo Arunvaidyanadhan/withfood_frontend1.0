@@ -17,6 +17,12 @@ class Layout extends React.Component {
         <li>
           <Link to="/ContributorPage"></Link>
         </li>
+        <li>
+          <Link to="/Registration_page"></Link>
+        </li>
+        <li>
+          <Link to="/Reg_thankspage"></Link>
+        </li>
       </ul>
     </nav>
 

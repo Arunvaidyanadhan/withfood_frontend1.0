@@ -1,0 +1,41 @@
+.reg_inpu{
+
+    padding-right: 25%;
+      
+    
+      
+      
+   }
+   .reg_lable{
+       text-transform: uppercase;
+       float: left;
+       font-size: max(5px, 10px);
+      
+   }
+   .form-con{
+       display: block;
+     margin-left:35%;
+     margin-right: 25%;
+     width:100%;
+      
+   }
+   .img-logo{
+     width: 100%;
+     height: auto;
+   }
+   .btn-signup{
+       display: block;
+       margin-left:35%;
+       margin-right: 25%;
+       padding:10px 50px;
+       background-color: #ff5500;
+       color: white;
+       border-radius: 45px;
+   }
+   h3{
+     font-size: max(3vw, 12px);
+   }
+   h5{
+     font-size: max(1vw, 6px);
+   }
+   

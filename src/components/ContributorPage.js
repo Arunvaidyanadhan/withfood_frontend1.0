@@ -7,6 +7,7 @@ import SearchNavbar from './SearchNavbar';
 import Footer from "./Footer";
 import "./Swappable.css"
 import Select from 'react-select/creatable';
+import axios from 'axios';
 
 
 const ContributorPage = () => {
@@ -26,13 +27,15 @@ const ContributorPage = () => {
 
   //alert
 
-  const [ImagePath, setImagePath] = useState("")
 
 
 
 
+  const [file, setFile] = useState();
 
-
+  const saveFile = (e) => {
+    setFile(e.target.files[0]);
+  };
 
   const [viewtoShow, setViewToShow] = useState([]);
   const [viewtoTips, setViewToTips] = useState([]);
@@ -91,7 +94,21 @@ const ContributorPage = () => {
     setIsOptional(!IsOptional);
   };
 
+  const uploadImage = async (e) => {
+    const data = e;
 
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const res = await axios.put(
+        `http://localhost:3000//uploadimageById?Recipe_Id=${data}`,
+        formData
+      );
+      console.log(res);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
   // dropdown values
   const RecipeTypeValues = ['Please select', 'Veg', 'Non-veg', 'Vegan']
   const RecipeCourseValues = ['Please select', 'Starter', 'Main Course', 'dessert', 'others']
@@ -102,17 +119,7 @@ const ContributorPage = () => {
 
   ];
 
-  function handleImage(event) {
-    setImagePath(URL.createObjectURL(event.target.files[0]));
-    const file = event.target.files[0];
-    const formData = new FormData()
-    formData.append('image', file)
 
-    console.log('formdata',formData.file)
-
-
-
-  }
 
 
   // submit to the server
@@ -145,7 +152,6 @@ const ContributorPage = () => {
       RecipeType: RecipeType,
       Steps_Tips: final,
       Tips: finaltips,
-      ImagePath: ImagePath
 
     };
     const optionsss = {
@@ -248,7 +254,13 @@ const ContributorPage = () => {
 
   });
 
+  useEffect(() => {
+    if (
+      typeof (recipe_Id) === "number"
+    )
+      uploadImage(recipe_Id)
 
+  });
   const handleRemoveOption = (index) => {
     const rows = [...viewtoShow];
     rows.splice(index, 1);
@@ -393,17 +405,13 @@ const ContributorPage = () => {
 
     </div>
     <div className='col container'>
-      <label className="form-label" for="customFile"></label>
-      <div></div>
-      <input placeholder='please Image Upload' type="file" name="image" accept='image/*' className="form-control form-control-sm" onChange={handleImage} />
-    </div>
-    {ImagePath ? (<div className="container recipeimage mt-2 ">
+        <label className="form-label" for="customFile"></label>
+        <div></div>
+        <input placeholder='please Image Upload' type="file" name="file" className="form-control form-control-sm" onChange={saveFile} />
 
-      <div style={{ width: "100%", height: "400px", borderRadius: "15px" }}>
-        <img src={ImagePath} alt="demo" style={{ width: '100%', height: '400px' }} />
 
       </div>
-    </div>) : ('')}
+   
 
     <div className="container">
       <div className="row">

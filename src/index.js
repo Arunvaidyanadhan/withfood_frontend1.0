@@ -7,6 +7,8 @@ import Layout from "./components/Layout";
 import Home from "./components/Home";
 import RecipePage from "./components/RecipePage";
 import ContributorPage from "./components/ContributorPage";
+import RegistrationPage from "./components/RegistrationPage";
+import RegThankspage from "./components/RegThankspage";
 import NoPage from "./components/NoPage";
 
 export default function App() {
@@ -17,6 +19,8 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="RecipePage" element={<RecipePage />} />
           <Route path="ContributorPage" element={<ContributorPage />} />
+          <Route path="RegistrationPage" element={<RegistrationPage />} />
+          <Route path="RegThankspage" element={<RegThankspage />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
