@@ -35,17 +35,6 @@ const CarvingCarousle = () => {
     navigate('/RegistrationPage');
   };
 
-  const recipePage = (e) => {
-    localStorage.setItem('recipeId', e); // stores recipeid
-
-    // route to recipe page
-
-    navigate('/recipePage');
-  };
-
-
-
-
   useEffect(() => {
     if (
       viewtoShow.length === 0
@@ -94,7 +83,7 @@ const CarvingCarousle = () => {
         <div className="input-group mb-3 inputsearch">
           <input type="text" className="form-control my-4 p-4" placeholder="Search Recipe" onChange={(e) => setname(e.target.value)} />
           <div className="input-group-append">
-            <button className="btn btn-rounded text-white btn-lg my-4 pr-2 searchbtn" type="button"  onClick={getRecipeswithfilter}><b>Search</b></button>
+            <button className="btn btn-rounded text-white btn-lg my-4 pr-2 searchbtn" type="button" onClick={getRecipeswithfilter}><b>Search</b></button>
           </div>
         </div>
         <ul className="navbar-nav mr-5  ">
@@ -145,33 +134,11 @@ const CarvingCarousle = () => {
         <div className="container ">
           <h1 className="m-0">What are you carving for ?</h1>
         </div>
-        <div className="container mt-3 mb-5">
-          <div className="row">
-            <div className="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel" data-interval="1000">
-              {viewtoShow.map((data, index) => (
-
-                <div className="MultiCarousel-inner" onClick={() => { recipePage(data.RecipeId) }}>
-
-                  <div className="item">
-                    <div className="pad15">
-                      <a href=" "><img src={data.ImagePath} alt="loading" className="img-fluid" /></a>
-                      <div className="overlay">
-                        <div className="text text-white"><a className="unstyle" href=" "><p className="mt-5 text-white" onClick={() => { recipePage(index) }}><strong>{data.RecipeName} </strong></p></a></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              <button className="btn  btn-lg leftLst"><span class="far fa-arrow-alt-circle-left fa-3x rounded-circle "></span></button>
-              <button className="btn  btn-lg rightLst"><span class="far fa-arrow-alt-circle-right fa-3x rounded-circle "></span></button>
-            </div>
-
-          </div>
-
-        </div>
 
 
-      </><IngrediantOfMonth /><Blog /><div className="container">
+
+      </><IngrediantOfMonth viewtoShow={viewtoShow} />
+      <Blog /><div className="container">
         <div className="row d-flex justify-content-around ">
           <div className="col-sm-12 col-md-6 col-lg-6 my-2   ">
             <div id="Newsletter" className="user ">
@@ -203,7 +170,7 @@ const CarvingCarousle = () => {
 
           </div>
         </div>
-        
+
       </div><Footer /></>
 
   </>

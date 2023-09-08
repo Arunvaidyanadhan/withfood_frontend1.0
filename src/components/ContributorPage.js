@@ -3,11 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "./RecDetail.css"
 import Socilfollow from './SocialFollow';
-import SearchNavbar from './SearchNavbar';
 import Footer from "./Footer";
 import "./Swappable.css"
 import Select from 'react-select/creatable';
 import axios from 'axios';
+import { FaHamburger } from 'react-icons/fa';
 
 
 const ContributorPage = () => {
@@ -162,6 +162,7 @@ const ContributorPage = () => {
       },
       body: JSON.stringify(body)
     }
+
 
     fetch('http://localhost:3000/recipe', optionsss)
       .then(response => {
@@ -356,7 +357,12 @@ const ContributorPage = () => {
 
   return <>
     <Socilfollow />
-    <SearchNavbar />
+    <div style={{ textAlign: 'center', color: 'orangered', fontSize: '2.5rem', padding: '0.5rem' }}>Add Recipe
+   
+    </div>
+            
+               
+            
     <div style={{ display: 'flex', flexWrap: 'wrap', fontWeight: 'bold' }} className='container '>
 
       <div className="mb-2">
@@ -405,19 +411,38 @@ const ContributorPage = () => {
 
     </div>
     <div className='col container'>
-        <label className="form-label" for="customFile"></label>
-        <div></div>
-        <input placeholder='please Image Upload' type="file" name="file" className="form-control form-control-sm" onChange={saveFile} />
+      <label className="form-label" for="customFile"></label>
+      <div></div>
+      <input placeholder='please Image Upload' type="file" name="file" className="form-control form-control-sm" onChange={saveFile} />
 
 
-      </div>
-   
+    </div>
+
 
     <div className="container">
       <div className="row">
         <div className="col-lg-6 h-100">
           <fieldset className="border border-warning p-2">
-            <legend className="float-none w-auto  p-2">All Ingredients</legend>
+            <legend className="float-none w-auto  p-1">All Ingredients</legend>
+            <div>
+              <h1> <FaHamburger
+
+
+                size={20}
+              />
+                <span
+                  style={{
+                    color: 'orange',
+                    paddingLeft: '1rem',
+                    fontWeight: 100,
+                    fontSize: '0.9rem',
+                    fontFamily: ' Arial, Helvetica, sans-serif'
+                  }}
+                >
+                  Please add the ingredient's from most priority to least one.
+
+                </span></h1>
+            </div>
             <label for="email" className="mr-sm-2"></label>
             <input type="email" className=" col-3" placeholder="Ingredients" value={IncredientsName} onChange={(e) => setIncredientsName(e.target.value)} />
             <label for="pwd" className="mr-sm-2"></label>
@@ -529,7 +554,25 @@ const ContributorPage = () => {
       </div>
     </div>    <div className="container mt-2">
       <h3>Add Steps/Tips</h3>
+      <div>
+        <h1> <FaHamburger
 
+
+          size={20}
+        />
+          <span
+            style={{
+              color: 'orange',
+              paddingLeft: '1rem',
+              fontWeight: 100,
+              fontSize: '0.9rem',
+              fontFamily: ' Arial, Helvetica, sans-serif'
+            }}
+          >
+            Please use 'steps' button for add steps & use 'tips' button for add tips.
+
+          </span></h1>
+      </div>
     </div>
     <div className="container mt-3">
       <div className="d-flex justify-content-between  mb-1">

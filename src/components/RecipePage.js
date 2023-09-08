@@ -191,7 +191,9 @@ const RecipePage = () => {
 
                                   <option value={item.SwappableIngredientName}>{item.SwappableIngredientName}</option>
                                 )
+                                return <></>
                             })}
+                            
                           </select>
                         </span>
                         <span className="ingredients_quantity">{data.Quantity}{data.Measurments}</span>
@@ -211,6 +213,7 @@ const RecipePage = () => {
                           </div>
                         </fieldset>
                       )
+                      return <></>
                   })}
                 </div>
               </div>
@@ -228,6 +231,7 @@ const RecipePage = () => {
                           </div>
                         </fieldset>
                       )
+                      return <></>
                   })}
                 </div>
               </div>
